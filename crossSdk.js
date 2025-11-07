@@ -5,7 +5,7 @@ const { WanBridge  } = require('wanchain-cross-sdk/packages/core')
 
 const ApiKey = '57b5005c60b8c444d880afe02d0a41cf4dc269f9c186940aa169412bb245f1c0'
 const SecretKey = 'eae6109bd79f3ca8e4d2adc6078867ea193ac8b6ac30140abd24cce78ce42def'
-
+let bridge
 
 function readyPromise(bc) {
   return new Promise((resolve, reject) => {
@@ -24,8 +24,8 @@ function readyPromise(bc) {
     bc.once('error', onError);
   });
 }
-async function main() {
-  let bridge = new WanBridge("mainnet"); // testnet or mainnet
+async function crossSdkInit() {
+  bridge = new WanBridge("mainnet"); // testnet or mainnet
 
 
   let iwanAuth = {
@@ -49,4 +49,10 @@ async function main() {
   let b = await bridge.getChainAssets(options)
   console.log("b:", Object.keys(b), b)
 }
-main()
+
+function getBridge() {
+  return bridge
+}
+module.exports = {
+  crossSdkInit,getBridge
+}

@@ -7,27 +7,33 @@
 var app = require('../app');
 var debug = require('debug')('MultiChainAssetApi:server');
 var http = require('http');
+const {crossSdkInit} = require('../crossSdk.js')
 
-/**
- * Get port from environment and store in Express.
- */
+let server
+async function main() {
+  /**
+   * Get port from environment and store in Express.
+   */
+  await crossSdkInit()
+  var port = normalizePort(process.env.PORT || '3000');
+  app.set('port', port);
 
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+  /**
+   * Create HTTP server.
+   */
 
-/**
- * Create HTTP server.
- */
+  server = http.createServer(app);
 
-var server = http.createServer(app);
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+}
+main()
 
 /**
  * Normalize a port into a number, string, or false.
