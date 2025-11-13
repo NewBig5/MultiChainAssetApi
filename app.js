@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -10,6 +11,13 @@ var multichainassets = require('./routes/multichainassets');
 
 var app = express();
 
+// const corsOptions = {
+//   origin: ['https://yourdomain.com', 'https://app.yourdomain.com'], // 只允许特定域名
+//   credentials: true, // 如果需要携带 cookie
+// };
+// app.use(cors(corsOptions));
+
+app.use(cors());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
