@@ -59,9 +59,9 @@ router.get('/', async function(req, res, next) {
     for(let i=0; i<chainNames.length; i++){
       let chainData = b[chainNames[i]]
       chainData = chainData.map(item=>{
+        delete item.highlightEndTime
         if(item.balance == "" || item.balance == "0" || item.price == "0") {
           item.usdValue = "0"
-          console.log("------------------------------usdValue = 0", item)
         } else {
           item.usdValue = BigNumber(item.balance).times(item.price).toString()
         }
